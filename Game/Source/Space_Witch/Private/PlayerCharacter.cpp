@@ -36,13 +36,20 @@ void APlayerCharacter::BeginPlay()
 	}
 }
 
+// Move Functionality
+// TODO: Make Value move player forward, backward, left and right
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
-	const float CurrentValue = Value.Get<float>();
+	const float IAValue = Value.Get<float>();
 
-	if (CurrentValue)
+	if (IAValue)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%f"), CurrentValue);
+		// [LogCategory], [LogVerbiosity], TEXT(), value
+		UE_LOG(LogTemp, Log, TEXT("Move function value: %f"), IAValue);
+
+		FVector ForwardVector = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+
+		AddMovementInput(ForwardVector, IAValue);
 	}
 }
 
@@ -60,6 +67,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	
 	if (UEnhancedInputComponent* EnhancedInputComp = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
+		// Binds the input action to the function
 		EnhancedInputComp->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 	}
 }

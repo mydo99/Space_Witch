@@ -34,6 +34,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input") UInputMappingContext* WitchMappingContext;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input") UInputAction* MoveAction;
 
+	// Input Action Functions
 	void Move(const FInputActionValue& Value);
 
 
