@@ -19,6 +19,8 @@ APlayerCharacter::APlayerCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +54,15 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 	AddMovementInput(RightVector, IAValue.Y);
 }
 
+void APlayerCharacter::Jump(const FInputActionValue& Value)
+{
+	const bool bHasPressed = Value.Get<bool>();
+
+	UE_LOG(LogTemp, Log, TEXT("Jumping? %s"), (bHasPressed ? TEXT("true") : TEXT("false")));
+
+	ACharacter::Jump();
+}
+
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
@@ -68,6 +79,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	{
 		// Binds the input action to the function
 		EnhancedInputComp->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
+		EnhancedInputComp->BindAction(JumpAction, ETriggerEvent::Started, this, &APlayerCharacter::Jump);
 	}
 }
 

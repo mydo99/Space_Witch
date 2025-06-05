@@ -33,10 +33,12 @@ protected:
 	// Enhanced Input System Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input") UInputMappingContext* WitchMappingContext;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input") UInputAction* MoveAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input") UInputAction* JumpAction;
 
 	// Input Action Functions
 	void Move(const FInputActionValue& Value);
 
+	void Jump(const FInputActionValue& Value);
 
 public:	
 	// Called every frame
