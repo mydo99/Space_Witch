@@ -40,17 +40,16 @@ void APlayerCharacter::BeginPlay()
 // TODO: Make Value move player forward, backward, left and right
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
-	const float IAValue = Value.Get<float>();
+	const FVector IAValue = Value.Get<FVector>();
 
-	if (IAValue)
-	{
-		// [LogCategory], [LogVerbiosity], TEXT(), value
-		UE_LOG(LogTemp, Log, TEXT("Move function value: %f"), IAValue);
+	// [LogCategory], [LogVerbiosity], TEXT(), value
+	UE_LOG(LogTemp, Log, TEXT("Move function value: %s"), *IAValue.ToString());
 
-		FVector ForwardVector = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	FVector ForwardVector = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	FVector RightVector = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 
-		AddMovementInput(ForwardVector, IAValue);
-	}
+	AddMovementInput(ForwardVector, IAValue.X);
+	AddMovementInput(RightVector, IAValue.Y);
 }
 
 // Called every frame
